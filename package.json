@@ -1,23 +1,44 @@
 {
-  "name": "privacy-eraser",
+  "name": "ghostpixel",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devEngines": {
-    "packageManager": {
-      "name": "pnpm",
-      "version": "12.15.0",
-      "onFail": "download"
-    }
-  },
-  "packageManager": "pnpm@12.15.0",
+  "private": true,
+  "description": "GhostPixel — 浏览器端图片元数据检查与清理工具，图片永不上传。",
   "type": "module",
+  "license": "MIT",
+  "author": "0xkillcoin",
+  "homepage": "https://iiiiiiiiiiiiiKK.github.io/ghostpixel/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iiiiiiiiiiiiiKK/ghostpixel.git"
+  },
+  "keywords": [
+    "privacy",
+    "exif",
+    "metadata",
+    "gps",
+    "image",
+    "browser",
+    "react",
+    "typescript"
+  ],
+  "packageManager": "pnpm@10.15.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "fixtures": "python scripts/make_fixtures.py",
+    "verify": "python scripts/verify_cleaned.py"
+  },
+  "dependencies": {
+    "exifr": "^7.1.3",
+    "fflate": "^0.8.3",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
   "devDependencies": {
     "@playwright/test": "^1.64.1",
     "@testing-library/jest-dom": "^7.0.1",
@@ -30,11 +51,5 @@
     "typescript": "5.9.3",
     "vite": "^7.3.7",
     "vitest": "^5.0.5"
-  },
-  "dependencies": {
-    "exifr": "^7.1.3",
-    "fflate": "^0.8.3",
-    "react": "^19.3.1",
-    "react-dom": "^19.3.1"
   }
 }
