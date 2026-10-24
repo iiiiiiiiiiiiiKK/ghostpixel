@@ -11,8 +11,5 @@ blob-report/
 !.env.example
 tmp-probe/
 tmp-out.*
-
 .npmrc
-tsconfig.tsbuildinfo
-tmp-*
-!tmp-*/
+*.tsbuildinfo
