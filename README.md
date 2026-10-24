@@ -11,7 +11,7 @@
 <img src="https://img.shields.io/badge/TypeScript-5.9-3178c6?style=flat-square" alt="TypeScript" />
 <img src="https://img.shields.io/badge/React-19-61dafb?style=flat-square" alt="React" />
 <img src="https://img.shields.io/badge/Vite-7-646cff?style=flat-square" alt="Vite" />
-<img src="https://img.shields.io/badge/tests-28%20unit%20%2B%2012%20e2e-2ea043?style=flat-square" alt="tests" />
+<img src="https://img.shields.io/badge/tests-28%20unit%20%2B%2026%20e2e-2ea043?style=flat-square" alt="tests" />
 
 [**在线体验**](https://iiiiiiiiiiiiiKK.github.io/ghostpixel/) · [支持格式](#-支持格式与清理能力) · [清理边界](#-为什么不能宣称清除所有隐藏信息) · [本地运行](#-本地开发)
 
@@ -294,7 +294,7 @@ BASE_PATH=/ghostpixel/ pnpm build # 部署到 GitHub Pages 项目页（默认）
 # 单元测试（28 个）
 pnpm test
 
-# E2E 测试（12 个：6 个流程 × 桌面/移动视口 + 自适应专项）
+# E2E 测试（26 个：6 个流程 + 7 个自适应专项，各跑桌面与 iPhone 视口）
 pnpm test:e2e
 
 # 重新生成测试图片
@@ -324,7 +324,7 @@ $ pnpm test:e2e --project=desktop
   ok 12 深色模式下仍然可读
   ok 13 清理过程不产生任何外部网络请求
 
-  13 passed
+  13 passed（desktop project）
 ```
 
 ```
@@ -374,6 +374,41 @@ EXIT=0
 ```
 
 四类格式清理后：**EXIF 0 个 tag、GPS 0 个 tag、PNG 文本 0 个、info 里无任何残留 key**，且尺寸与色彩模式均保持原样（PNG 仍是 RGBA）。
+
+> 这个验证的意义在于：Pillow 的解析器和我们自己的（exifr + 自研 PNG chunk 解析）完全不同。
+> 两边都说「没有元数据」，才能排除「我们的解析器漏读」这种可能。
+
+### 线上部署验证
+
+```bash
+node scripts/verify-live.mjs
+```
+
+直接对 <https://iiiiiiiiiiiiiKK.github.io/ghostpixel/> 跑真实流程，**18/18 通过**：
+
+```
+✔ 线上首页可访问 — HTTP 200
+✔ 页面标题正确 — GhostPixel · 图片元数据检查与清理
+✔ 顶栏 𝕏 入口存在
+✔ 𝕏 链接指向 0xkillcoin
+✔ 𝕏 入口可见
+✔ 检测到 GPS 纬度
+✔ 检测到设备型号
+✔ 检测到拍摄时间
+✔ GPS 红色提示出现
+✔ 复检验证通过
+✔ 导出容器无残留块
+✔ 残留字段为 0
+✔ 可下载清理后的图片 — with-exif-gps.cleaned.jpg (14023 bytes)
+✔ 全程无外部网络请求 — 0 requests
+✔ iPhone 视口无横向溢出 — 390 <= 390
+✔ 移动端 𝕏 入口可见且可点 — 34×34
+✔ 移动端清理成功
+✔ 移动端处理后仍无溢出 — 390 <= 390
+```
+
+完整的原始输出、Pillow 交叉验证、以及「哪些验证方法有局限」的说明见
+[`docs/VERIFICATION.md`](docs/VERIFICATION.md)。
 
 ---
 

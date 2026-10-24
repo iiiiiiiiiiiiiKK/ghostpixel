@@ -1,0 +1,92 @@
+[
+  {
+    "name": "线上首页可访问",
+    "pass": true,
+    "detail": "HTTP 200"
+  },
+  {
+    "name": "页面标题正确",
+    "pass": true,
+    "detail": "GhostPixel · 图片元数据检查与清理"
+  },
+  {
+    "name": "顶栏 𝕏 入口存在",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "name": "𝕏 链接指向 0xkillcoin",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "name": "𝕏 入口可见",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "name": "检测到 GPS 纬度",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "name": "检测到设备型号",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "name": "检测到拍摄时间",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "name": "GPS 红色提示出现",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "name": "复检验证通过",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "name": "导出容器无残留块",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "name": "残留字段为 0",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "name": "可下载清理后的图片",
+    "pass": true,
+    "detail": "with-exif-gps.cleaned.jpg (14023 bytes)"
+  },
+  {
+    "name": "全程无外部网络请求",
+    "pass": true,
+    "detail": "0 requests"
+  },
+  {
+    "name": "iPhone 视口无横向溢出",
+    "pass": true,
+    "detail": "390 <= 390"
+  },
+  {
+    "name": "移动端 𝕏 入口可见且可点",
+    "pass": true,
+    "detail": "34×34"
+  },
+  {
+    "name": "移动端清理成功",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "name": "移动端处理后仍无溢出",
+    "pass": true,
+    "detail": "390 <= 390"
+  }
+]
