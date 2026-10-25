@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+﻿import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { zipSync } from 'fflate';
 import { AUTHOR_X, FORMAT_MATRIX, LIMITS, PRIVACY_PROMISES, REPO_URL, TIPS } from './content.ts';
 import { analyzeBytes, cleanImage, DEFAULT_CLEAN_OPTIONS, describePlan, type AnalyzeResult } from './lib/pipeline.ts';
@@ -10,7 +10,7 @@ import { FormatMatrix } from './components/FormatMatrix.tsx';
 import { Guidance } from './components/Guidance.tsx';
 import { Header } from './components/Header.tsx';
 import { Toast, type ToastMessage } from './components/Toast.tsx';
-import { IconCheck, IconEraser, IconScan, IconTrash, IconZip, IconAlert, IconInfo, IconX } from './components/icons.tsx';
+import { IconCheck, IconEraser, IconScan, IconShield, IconTrash, IconZip, IconAlert, IconInfo, IconX } from './components/icons.tsx';
 import { Steps } from './components/Steps.tsx';
 
 export interface ItemState {
@@ -527,19 +527,31 @@ export default function App() {
         </section>
       </main>
 
-      <footer className="footer container">
-        <span>GhostPixel · 图片元数据检查与清理</span>
-        <span className="footer-sep">·</span>
-        <span>MIT License</span>
-        <span className="footer-sep">·</span>
-        <a href={REPO_URL} target="_blank" rel="noreferrer noopener">
-          源码与已知限制
-        </a>
-        <span className="footer-sep">·</span>
-        <a href={AUTHOR_X.url} target="_blank" rel="noreferrer noopener">
-          作者 𝕏 {AUTHOR_X.handle}
-        </a>
-        <span style={{ marginLeft: 'auto' }}>所有处理都在你的设备上完成</span>
+      <footer className="footer">
+        <div className="container footer-inner">
+          <div className="footer-row">
+            <span className="footer-brand">
+              <IconShield className="footer-mark" />
+              GhostPixel
+            </span>
+            <span className="footer-tag">图片元数据检查与清理</span>
+            <span className="footer-chip">MIT License</span>
+          </div>
+          <div className="footer-row footer-row--links">
+            <a href={REPO_URL} target="_blank" rel="noreferrer noopener">
+              源码与已知限制
+            </a>
+            <span className="footer-sep" aria-hidden>
+              /
+            </span>
+            <a href={AUTHOR_X.url} target="_blank" rel="noreferrer noopener">
+              作者 𝕏 {AUTHOR_X.handle}
+            </a>
+          </div>
+          <div className="footer-row footer-row--note">
+            <span className="footer-note">所有处理都在你的设备上完成 · 图片不会离开浏览器</span>
+          </div>
+        </div>
       </footer>
 
       <Toast toasts={toasts} onDismiss={(id) => setToasts((t) => t.filter((x) => x.id !== id))} />

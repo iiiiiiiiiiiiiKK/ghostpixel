@@ -67,6 +67,43 @@ test('深色模式下仍然可读（背景与文字有足够对比）', async ({
   expect(colors.text).not.toBe('');
 });
 
+test('页脚在窄屏下分行排列，分隔符不单独占行', async ({ page }) => {
+  for (const width of [320, 390, 430, 1280]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/');
+    const footer = await page.evaluate(() => {
+      const inner = document.querySelector('.footer-inner');
+      if (!inner) return null;
+      const rows = Array.from(inner.querySelectorAll('.footer-row'));
+      // 每个分隔符必须和某个链接/文本在同一行（说明它没有被挤到独立一行）
+      const seps = Array.from(document.querySelectorAll('.footer-sep')).map((s) => {
+        const r = s.getBoundingClientRect();
+        const siblings = rows.flatMap((row) => Array.from(row.querySelectorAll('a, span')));
+        const sameLine = siblings.some((el) => {
+          if (el === s) return false;
+          const er = el.getBoundingClientRect();
+          return Math.abs(er.top - r.top) < 3 && (el.textContent ?? '').trim().length > 0;
+        });
+        return sameLine;
+      });
+      return {
+        rows: rows.length,
+        rowTops: new Set(rows.map((r) => Math.round(r.getBoundingClientRect().top))).size,
+        sepsOrphaned: seps.filter((v) => !v).length,
+        text: inner.innerText.replace(/\n/g, ' ⏎ '),
+      };
+    });
+    expect(footer, `footer @${width}px`).not.toBeNull();
+    expect(footer!.rows, `row count @${width}px`).toBe(3);
+    expect(footer!.rowTops, `rows stacked @${width}px`).toBe(3);
+    expect(footer!.sepsOrphaned, `orphan separators @${width}px`).toBe(0);
+    // 关键内容都在
+    expect(footer!.text).toContain('GhostPixel');
+    expect(footer!.text).toContain('MIT License');
+    expect(footer!.text).toContain('0xkillcoin');
+  }
+});
+
 test('清理过程不产生任何外部网络请求', async ({ page }) => {
   const external: string[] = [];
   page.on('request', (req) => {
