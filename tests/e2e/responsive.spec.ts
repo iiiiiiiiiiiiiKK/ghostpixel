@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+﻿import { expect, test } from '@playwright/test';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
@@ -74,11 +74,11 @@ test('页脚在窄屏下分行排列，分隔符不单独占行', async ({ page 
     const footer = await page.evaluate(() => {
       const inner = document.querySelector('.footer-inner');
       if (!inner) return null;
-      const rows = Array.from(inner.querySelectorAll('.footer-row'));
+      const rows = Array.from(inner.querySelectorAll<HTMLElement>('.footer-row'));
       // 每个分隔符必须和某个链接/文本在同一行（说明它没有被挤到独立一行）
       const seps = Array.from(document.querySelectorAll('.footer-sep')).map((s) => {
         const r = s.getBoundingClientRect();
-        const siblings = rows.flatMap((row) => Array.from(row.querySelectorAll('a, span')));
+        const siblings = rows.flatMap((row) => Array.from(row.querySelectorAll<HTMLElement>('a, span')));
         const sameLine = siblings.some((el) => {
           if (el === s) return false;
           const er = el.getBoundingClientRect();
@@ -90,7 +90,7 @@ test('页脚在窄屏下分行排列，分隔符不单独占行', async ({ page 
         rows: rows.length,
         rowTops: new Set(rows.map((r) => Math.round(r.getBoundingClientRect().top))).size,
         sepsOrphaned: seps.filter((v) => !v).length,
-        text: inner.innerText.replace(/\n/g, ' ⏎ '),
+        text: (inner as HTMLElement).innerText.replace(/\n/g, ' ⏎ '),
       };
     });
     expect(footer, `footer @${width}px`).not.toBeNull();
